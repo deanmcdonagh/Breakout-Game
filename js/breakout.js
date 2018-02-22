@@ -2,6 +2,7 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var ballRadius = 10;
+var ballColour = 5;
 
 //Set the starting point
 var x = canvas.width/2;
@@ -15,7 +16,7 @@ function drawBall() {
 	ctx.arc(x, y, ballRadius, 0, Math.PI*2);
 	ctx.beginPath();
 	ctx.arc(x, y, 10, 0, Math.PI*2);
-	ctx.fillStyle = "#0095DD";
+	ctx.fillStyle = ballColour;
 	ctx.fill();
 	ctx.closePath();
 }
@@ -27,12 +28,17 @@ function draw() {
 	y += dy;
 	if(x + dx >canvas.width-ballRadius || x + dx< ballRadius) {
 		dx = -dx;
-	}
+		ballColour = "red";
+		ballRadius = 5;
+	} 
 	if(y + dy> canvas.height-ballRadius || y + dy <ballRadius) {
 		dy = -dy;
+		ballColour = "green";
+		ballRadius = 10;
 	}
 	
 }
+
 
 
 
