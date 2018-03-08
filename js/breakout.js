@@ -51,13 +51,6 @@ function draw() {
 
 drawPaddle();
 
-if(rightPressed){ 
-paddleX += 7;
-}
-
-else if(leftPressed){
-	paddleX -= 7;
-}
 
 
 	x += dx;
@@ -73,6 +66,17 @@ else if(leftPressed){
 		ballColour = "green";
 		ballRadius = 10;
 	}
+	
+	if(rightPressed && paddleX < canvas.width-paddleWidth){ 
+		paddleX += 7;
+	}
+	else if(leftPressed && paddleX > 0){
+		paddleX -= 7;
+	}
+
+	
+	
+	
 }
 
 
