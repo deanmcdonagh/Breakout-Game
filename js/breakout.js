@@ -9,6 +9,11 @@ var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
 
+//Moving the paddle
+var rightPressed = false;
+var leftPressed = false;
+
+
 
 
 //Set the starting point
@@ -27,6 +32,9 @@ function drawBall() {
 	ctx.fill();
 	ctx.closePath();
 }
+
+
+
 //Function to draw paddle
 function drawPaddle() {
 	ctx.beginPath();
@@ -43,8 +51,18 @@ function draw() {
 
 drawPaddle();
 
+if(rightPressed){ 
+paddleX += 7;
+}
+
+else if(leftPressed){
+	paddleX -= 7;
+}
+
+
 	x += dx;
 	y += dy;
+	
 	if(x + dx >canvas.width-ballRadius || x + dx< ballRadius) {
 		dx = -dx;
 		ballColour = "red";
@@ -55,14 +73,34 @@ drawPaddle();
 		ballColour = "green";
 		ballRadius = 10;
 	}
-	
 }
 
 
 
 
+	
+//Monitor the documents for events that move the paddle
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
 
+//Define functions to handle keyDown or keyUp events
+function keyDownHandler(e) {
+	if(e.keyCode == 39) {
+		rightPressed = true;
+	}
+	else if(e.keyCode == 37) {
+		leftPressed = true;
+	}
+}
 
+function keyUpHandler(e) {
+	if(e.keyCode == 39) {
+		rightPressed = false;
+	}
+	else if(e.keyCode == 37) {
+		leftPressed = false;
+	}
+}
 
 setInterval(draw, 10);
 
