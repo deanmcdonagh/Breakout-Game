@@ -56,16 +56,17 @@ drawPaddle();
 	x += dx;
 	y += dy;
 	
-	if(x + dx >canvas.width-ballRadius || x + dx< ballRadius) {
+	//Bounce the ball off three walls - if it drops off the bottom - Game Over!
+	if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
 		dx = -dx;
-		ballColour = "red";
-		ballRadius = 5;
 	} 
-	if(y + dy> canvas.height-ballRadius || y + dy <ballRadius) {
+	if(y + dy < ballRadius){
 		dy = -dy;
-		ballColour = "green";
-		ballRadius = 10;
+	} else if(y + dy > canvas.height-ballRadius) {
+		alert("Game Over");
+		document.location.reload();
 	}
+	
 	
 	if(rightPressed && paddleX < canvas.width-paddleWidth){ 
 		paddleX += 7;
