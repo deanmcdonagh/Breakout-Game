@@ -87,10 +87,14 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawBall();
 
-drawPaddle();
+	drawPaddle();
 
-//draw the bricks
-drawBricks();
+	//draw the bricks
+	drawBricks();
+	
+	//Collision detection
+	collisionDetection();
+	
 
 	x += dx;
 	y += dy;
@@ -133,9 +137,9 @@ drawBricks();
 
 
 	
-//Monitor the documents for events that move the paddle
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+	//Monitor the documents for events that move the paddle
+	document.addEventListener("keydown", keyDownHandler, false);
+	document.addEventListener("keyup", keyUpHandler, false);
 
 //Define functions to handle keyDown or keyUp events
 function keyDownHandler(e) {
@@ -155,6 +159,22 @@ function keyUpHandler(e) {
 		leftPressed = false;
 	}
 }
+
+
+
+function collisionDetection() {
+	for(c=0; c<brickColumnCount; c++) {
+		for(r=0; r<brickRowCount; r++) {
+			var b = bricks[c][r];
+			if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+				dy = -dy;
+			}
+		}
+	}
+}
+
+
+
 
 setInterval(draw, 10);
 
