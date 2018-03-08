@@ -114,6 +114,8 @@ function draw() {
 		}
 		else{ 
 		alert("Game Over");
+		x = canvas.width/2;
+		y = canvas.height-30;
 		document.location.reload();
 	}
 	
