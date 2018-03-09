@@ -26,6 +26,13 @@ var brickOffsetLeft = 30;
 var score = 0;
 
 
+//Game Sounds
+var WINNING_SOUND = new Audio('sounds/woohoo.wav');
+var SCORE_SOUND = new Audio('sounds/success.wav');
+var GAMEOVER_SOUND = new Audio('sounds/gameover.wav');
+
+
+
 //Hold the bricks in a two dimensional array - think of it as rows and columns 
 var bricks = [];
 for(c=0; c<brickColumnCount; c++) {
@@ -121,6 +128,7 @@ function draw() {
 			dy = -dy;
 		}
 		else{ 
+		GAMEOVER_SOUND.play();
 		alert("Game Over");
 		x = canvas.width/2;
 		y = canvas.height-30;
@@ -147,6 +155,19 @@ function draw() {
 	//Monitor the documents for events that move the paddle
 	document.addEventListener("keydown", keyDownHandler, false);
 	document.addEventListener("keyup", keyUpHandler, false);
+	
+	//Listening for mouse movement
+	document.addEventListener("mousemove", mouseMoveHandler, false);
+	
+	//Define the function for mouse movement
+	function mouseMoveHandler(e) {
+		var relativeX = e.clientX - canvas.offsetLeft;
+		if(relativeX > 0 && relativeX < canvas.width) {
+			paddleX = relativeX - paddleWidth/2;
+		}
+	}
+	
+	
 
 //Define functions to handle keyDown or keyUp events
 function keyDownHandler(e) {
@@ -178,7 +199,9 @@ function collisionDetection() {
 				dy = -dy;
 				b.status = 0;
 				score++;
+				SCORE_SOUND.play();
 				if(score == brickRowCount*brickColumnCount) {
+					WINNING_SOUND.play();
 					alert("YOU WIN, CONGRATULATIONS!");
 					document.location.reload();
 				}
