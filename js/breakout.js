@@ -31,6 +31,8 @@ var WINNING_SOUND = new Audio('sounds/woohoo.wav');
 var SCORE_SOUND = new Audio('sounds/success.wav');
 var GAMEOVER_SOUND = new Audio('sounds/gameover.wav');
 
+//Adding Game Lives
+var lives = 3
 
 
 //Hold the bricks in a two dimensional array - think of it as rows and columns 
@@ -105,6 +107,10 @@ function draw() {
 	
 	//Draw the Score
 	drawScore();
+	
+
+	//Draw the lives
+	drawLives();
 
 	//draw the bricks
 	drawBricks();
@@ -128,12 +134,21 @@ function draw() {
 			dy = -dy;
 		}
 		else{ 
+		lives--;
+		if(!lives) {
 		GAMEOVER_SOUND.play();
 		alert("Game Over");
+		document.location.reload();
+		}
+		else {
 		x = canvas.width/2;
 		y = canvas.height-30;
-		document.location.reload();
-	}
+		dx = 2;
+		dy = -2;
+		paddleX = (canvas.width-paddleWidth)/2;
+		}
+		}
+		
 	
 	
 }
@@ -217,8 +232,16 @@ function drawScore() {
 	ctx.font = "16px Arial";
 	ctx.fillStyle = "#0095DD";
 	ctx.fillText("Score: "+score, 0, 20);
-	document.getElementById("gamescore").innerHTML = "Score: " + score;
+	document.getElementById("gamescore").innerHTML = "Score: " + score;	
 }
+
+function drawLives() {
+		ctx.font = "16px Arial";
+		ctx.fillStyle = "#0095DD";
+		ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+		document.getElementById("gamelives").innerHTML = "Lives: " + lives;
+	}
+	
 
 
 
