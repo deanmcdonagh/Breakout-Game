@@ -22,6 +22,10 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 
+//Counting the score
+var score = 0;
+
+
 //Hold the bricks in a two dimensional array - think of it as rows and columns 
 var bricks = [];
 for(c=0; c<brickColumnCount; c++) {
@@ -89,7 +93,11 @@ function draw() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawBall();
 
+	//Draw the paddle 
 	drawPaddle();
+	
+	//Draw the Score
+	drawScore();
 
 	//draw the bricks
 	drawBricks();
@@ -169,11 +177,19 @@ function collisionDetection() {
 			if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
 				dy = -dy;
 				b.status = 0;
-			}
+				score++;
+				}
 			
 			}
 		}
 	}
+}
+
+function drawScore() {
+	ctx.font = "16px Arial";
+	ctx.fillStyle = "#0095DD";
+	ctx.fillText("Score: "+score, 0, 20);
+	document.getElementById("gamescore").innerHTML = "Score: " + score;
 }
 
 
